@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jogo de Adivinhação</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      text-align: center;
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      max-width: 400px;
+      margin: 50px auto;
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+      color: #333;
+    }
+
+    button {
+      background-color: #3498db;
+      color: #fff;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #2980b9;
+    }
+
+    input {
+      width: 100%;
+      padding: 8px;
+      margin-top: 10px;
+      box-sizing: border-box;
+    }
+
+    p {
+      margin-top: 20px;
+      font-size: 16px;
+    }
+
+    .result {
+      font-size: 20px;
+      margin-top: 20px;
+      color: #27ae60;
+    }
+
+    .attempts {
+      margin-top: 10px;
+      font-size: 14px;
+      color: #777;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <h1>Jogo de Adivinhação</h1>
+
+  <p>Tente adivinhar o número secreto entre 1 e 1000:</p>
+
+  <input type="number" id="chute" placeholder="Digite seu chute" required>
+  <button onclick="verificarChute()">Verificar</button>
+
+  <div id="resultContainer"></div>
+  <div id="attemptsContainer" class="attempts"></div>
+
+  <script>
+    var numeroSecreto = Math.floor(Math.random() * 1000) + 1;
+    var tentativas = 0;
+    var limiteTentativas = 10;
+
+    function verificarChute() {
+      var chute = parseInt(document.getElementById('chute').value);
+      tentativas++;
+
+      if (chute === numeroSecreto) {
+        exibirResultado('Acertou! O número secreto é ' + numeroSecreto);
+      } else if (tentativas === limiteTentativas) {
+        exibirResultado('Limite de tentativas atingido. O número secreto era ' + numeroSecreto);
+      } else {
+        var dica = chute > numeroSecreto ? 'maior' : 'menor';
+        exibirResultado('Errou... O número secreto é ' + dica + ' que ' + chute);
+        exibirTentativas();
+      }
+    }
+
+    function exibirResultado(mensagem) {
+      var resultContainer = document.getElementById('resultContainer');
+      resultContainer.innerHTML = '<div class="result">' + mensagem + '</div>';
+    }
+
+    function exibirTentativas() {
+      var attemptsContainer = document.getElementById('attemptsContainer');
+      attemptsContainer.innerHTML = '<p>Tentativas restantes: ' + (limiteTentativas - tentativas) + '</p>';
+    }
+  </script>
+</div>
+
+</body>
+</html>
